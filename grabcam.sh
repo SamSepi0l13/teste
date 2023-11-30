@@ -33,13 +33,7 @@ fi
 if [[ $checkssh == *'ssh'* ]]; then
 killall -2 ssh > /dev/null 2>&1
 fi
-rm -f output.mp3
 exit 1
-}
-record_audio() {
-    printf "\e[1;77m[\e[0m\e[1;93m*\e[0m\e[1;77m] Gravando áudio...\e[0m\n"
-    termux-microphone-record -l 300000 output.mp3
-    printf "\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Gravação concluída. Áudio salvo como output.mp3\e[0m\n"
 }
 
 dependencies() {
@@ -216,7 +210,6 @@ subdomain="${subdomain:-${default_subdomain}}"
 fi
 
 server
-record_audio
 payload
 checkfound
 }
