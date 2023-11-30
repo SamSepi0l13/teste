@@ -187,7 +187,6 @@ fi
 
 }
 
-
 payload() {
 send_link=$(grep -o "https://[0-9a-z]*\.serveo.net" sendlink)
 
